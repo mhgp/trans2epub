@@ -1,0 +1,22 @@
+{
+  "name": "trans2epub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/probe-image-size": "^7.2.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "jszip": "^3.10.0",
+    "probe-image-size": "^7.2.3"
+  }
+}
