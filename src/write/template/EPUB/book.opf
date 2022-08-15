@@ -1,0 +1,21 @@
+<package unique-identifier="pub-id" version="3.0" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="pub-id"></dc:identifier>
+    <dc:title></dc:title>
+    <dc:language>ja-JP</dc:language>
+    <dc:creator id="creator"></dc:creator>
+    <meta refines="#creator" property="role" scheme="marc:relators" id="role">aut</meta>
+    <meta property="rendition:layout">reflowable</meta>
+    <meta property="rendition:flow">scrolled-doc</meta>
+    <meta property="dcterms:modified"></meta>
+  </metadata>
+  <manifest>
+    <item id="css" href="./css/default.css" media-type="text/css"/>
+    <item id="nav" href="./nav.xhtml" properties="nav" media-type="application/xhtml+xml"/>
+    <item id="cover" href="./cover.xhtml" media-type="application/xhtml+xml"/>
+  </manifest>
+  <spine page-progression-direction="rtl">
+    <itemref idref="cover"/>
+    <itemref idref="nav"/>
+  </spine>
+</package>
