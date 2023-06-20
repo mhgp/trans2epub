@@ -1,6 +1,7 @@
 # trans2epub
 
-
+## How to uwe
+` npx ts-node ./src/index.ts "file path..."`
 ## ファイル
 
 ### summary.json
