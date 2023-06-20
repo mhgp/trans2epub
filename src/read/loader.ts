@@ -11,16 +11,16 @@ type ChapterConstitution = {
     'last': number,
 };
 type SummaryStrict = {
-	'共通ファイル名': string,
-	'タイトル': string,
-	'作者名': string,
-	'あらすじ': string[],
-	'キーワード': string[],
+    '共通ファイル名': string,
+    'タイトル': string,
+    '作者名': string,
+    'あらすじ': string[],
+    'キーワード': string[],
     'ジャンル': string,
-	'掲載日': string,
-	'更新': string,
-	'URL': string,
-	'chapters': ChapterConstitution[]
+    '掲載日': string,
+    '更新': string,
+    'URL': string,
+    'chapters': ChapterConstitution[]
 };
 type chapterFile = {
     num: number,
@@ -34,8 +34,25 @@ export class NovelLoader implements adapter.ILoader {
         this.srcPath = srcPath;
     }
     start(): adapter.LoaderResult {
-        const jsonText = fs.readFileSync(`${this.srcPath}/${SUMMARY_FILE_NAME}`, {encoding: 'utf-8'});
+        const jsonText = fs.readFileSync(`${this.srcPath}/${SUMMARY_FILE_NAME}`, { encoding: 'utf-8' });
         const summaryData = JSON.parse(jsonText) as SummaryStrict;
+
+        //
+        const requiredParam = [
+            '共通ファイル名',
+            'あらすじ',
+            '作者名',
+            'キーワード',
+            '掲載日',
+            '更新',
+            'URL',
+        ];
+        requiredParam.forEach(paramName => {
+            if (! Object.hasOwn(summaryData, paramName)) throw new Error(`${paramName}がありません。`);
+        });
+        if (Object.hasOwn(summaryData, '')) throw new Error('');
+
+        //
         summaryData['chapters'] = summaryData['chapters'].sort((a, b) => {
             if (a.begin < b.begin) {
                 return -1;
@@ -80,7 +97,7 @@ class SectionFilesReader {
     async *readChapters(): AsyncGenerator<adapter.BookSection> {
         const chapterList: chapterFile[] = await getFilePathList(this.commonName, this.srcPath);
         for (const chapterInfo of chapterList) {
-            const textFile = fs.readFileSync(chapterInfo.path, {encoding: 'utf-8'});
+            const textFile = fs.readFileSync(chapterInfo.path, { encoding: 'utf-8' });
             yield analyzer.analyzeSection(textFile, chapterInfo.num, this.srcPath);
         }
     }
@@ -94,10 +111,10 @@ class SectionFilesReader {
  */
 async function getFilePathList(nCode: string, srcPath: string): Promise<chapterFile[]> {
     const fileMatch = new RegExp(`^${nCode}-(\\d+)\\.txt`, 'i');
-    const targetFiles: chapterFile[] = fs.readdirSync(srcPath).filter((name) => {
+    const targetFiles: chapterFile[] = fs.readdirSync(srcPath).filter((name) => {0
         return fs.statSync(`${srcPath}/${name}`).isFile() && fileMatch.test(name); //絞り込み
     }).map((name) => {
-        return {num: Number(fileMatch.exec(name)![1]), path: `${srcPath}/${name}`};
+        return { num: Number(fileMatch.exec(name)![1]), path: `${srcPath}/${name}` };
     });
     return new Promise((resolve) => {
         resolve(targetFiles.sort((a, b) => {
